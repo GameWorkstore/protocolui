@@ -1,0 +1,15 @@
+{
+    "name": "ProtocolUI",
+    "references": [
+        "GUID:c32d36751e998d74999be5c29b033d6e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
