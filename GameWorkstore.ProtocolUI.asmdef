@@ -1,5 +1,5 @@
 {
-    "name": "ProtocolUI",
+    "name": "GameWorkstore.ProtocolUI",
     "references": [
         "GUID:c32d36751e998d74999be5c29b033d6e"
     ],
