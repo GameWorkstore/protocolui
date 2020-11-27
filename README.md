@@ -8,6 +8,8 @@ Use it your own risk!
 At package.json, add these lines of code:
 > "com.gameworkstore.protocolui": "https://github.com/GameWorkstore/protocolui.git"
 
+> "com.gameworkstore.patterns": "https://github.com/GameWorkstore/patterns.git"
+
 And wait for unity to download and compile the package.
 
 for update package for a newer version, click in [Help->PackageUpdate->GameWorkstore.ProtocolUI]
