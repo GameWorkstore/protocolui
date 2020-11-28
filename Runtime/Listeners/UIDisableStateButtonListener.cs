@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace GameWorkstore.ProtocolUI
 {
-    public class UIChangeStateButtonListener : MonoBehaviour
+    public class UIDisableStateButtonListener : MonoBehaviour
     {
         public string State;
         private UIStateService _uistateservice;
@@ -20,7 +20,7 @@ namespace GameWorkstore.ProtocolUI
 
         private void OnClick()
         {
-            _uistateservice.SetState(_stateHash, true);
+            _uistateservice.SetState(_stateHash, false);
         }
     }
 }
