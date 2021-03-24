@@ -6,13 +6,15 @@ Use it your own risk!
 # How to install
 
 At package.json, add these lines of code:
-> "com.gameworkstore.protocolui": "https://github.com/GameWorkstore/protocolui.git"
-
-> "com.gameworkstore.patterns": "https://github.com/GameWorkstore/patterns.git"
+```json
+"com.gameworkstore.protocolui": "https://github.com/GameWorkstore/protocolui.git"
+"com.gameworkstore.patterns": "https://github.com/GameWorkstore/patterns.git"
+```
 
 And wait for unity to download and compile the package.
 
-for update package for a newer version, click in [Help->PackageUpdate->GameWorkstore.ProtocolUI]
+for update package for a newer version, install UpmGitExtension and update on [ Window > Package Manager ]!
+> https://github.com/mob-sakai/UpmGitExtension
 
 # Contributions
 
