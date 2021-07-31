@@ -7,14 +7,16 @@ Use it your own risk!
 
 At package.json, add these lines of code:
 ```json
-"com.gameworkstore.protocolui": "https://github.com/GameWorkstore/protocolui.git"
-"com.gameworkstore.patterns": "https://github.com/GameWorkstore/patterns.git"
+"com.gameworkstore.protocolui": "git://github.com/GameWorkstore/protocolui.git#1.0.0"
+"com.gameworkstore.patterns": "git://github.com/GameWorkstore/patterns.git#1.1.2"
 ```
 
 And wait for unity to download and compile the package.
 
-for update package for a newer version, install UpmGitExtension and update on [ Window > Package Manager ]!
-> https://github.com/mob-sakai/UpmGitExtension
+you can upgrade your version by including the release version at end of the link:
+```json
+"com.gameworkstore.protocolui": "git://github.com/GameWorkstore/protocolui.git#1.0.1"
+```
 
 # Contributions
 
