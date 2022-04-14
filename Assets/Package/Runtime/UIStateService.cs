@@ -5,7 +5,7 @@ namespace GameWorkstore.ProtocolUI
 {
     public class UIStateService : IService
     {
-        private readonly HighSpeedArray<State> _states = new HighSpeedArray<State>(100);
+        private readonly HighSpeedArray<RuntimeState> _states = new HighSpeedArray<RuntimeState>(100);
         private int _proc;
         private UIStateScriptable[] _procs;
         private int _layer;
@@ -25,7 +25,7 @@ namespace GameWorkstore.ProtocolUI
             int index = _states.IndexOf(IsEqual);
             if (index < 0)
             {
-                _states.Add(new State() { Scriptable = state, Layer = layer, Active = false });
+                _states.Add(new RuntimeState() { Scriptable = state, Layer = layer, Active = false });
             }
             else if (layer >= 0)
             {
@@ -39,7 +39,7 @@ namespace GameWorkstore.ProtocolUI
             int index = _states.IndexOf(IsEqual);
             if (index < 0)
             {
-                _states.Add(new State() { Scriptable = state, Layer = NotSharedLayer, Active = isActive });
+                _states.Add(new RuntimeState() { Scriptable = state, Layer = NotSharedLayer, Active = isActive });
                 return;
             }
             _layer = _states[index].Layer;
@@ -59,30 +59,30 @@ namespace GameWorkstore.ProtocolUI
             return _states.Any(IsActiveMulty);
         }
 
-        private void DisableIfNecessary(State state)
+        private void DisableIfNecessary(RuntimeState state)
         {
             state.Active &= state.Layer != _layer || state.Layer == NotSharedLayer;
         }
 
-        private bool IsEqual(State state)
+        private bool IsEqual(RuntimeState state)
         {
             return state.Scriptable.Hash == _proc;
         }
 
-        private bool IsActive(State state)
+        private bool IsActive(RuntimeState state)
         {
             if (state.Scriptable.Hash == _proc) return state.Active;
             return false;
         }
 
-        private bool IsActiveMulty(State state)
+        private bool IsActiveMulty(RuntimeState state)
         {
             for(int i = 0; i < _procs.Length; i++) if (state.Scriptable.Hash == _procs[i].Hash) return state.Active;
             return false;
         }
     }
 
-    public class State
+    public class RuntimeState
     {
         public UIStateScriptable Scriptable;
         public bool Active;
