@@ -9,6 +9,7 @@ namespace GameWorkstore.ProtocolUI
         private int _proc;
         private UIStateScriptable[] _procs;
         private int _layer;
+		public const int NotSharedLayer = -1;
 
         public override void Preprocess()
         {
@@ -18,7 +19,7 @@ namespace GameWorkstore.ProtocolUI
         {
         }
         
-        public void RegisterState(UIStateScriptable state, int layer = -1)
+        public void RegisterState(UIStateScriptable state, int layer = NotSharedLayer)
         {
             _proc = state.Hash;
             int index = _states.IndexOf(IsEqual);
@@ -38,11 +39,11 @@ namespace GameWorkstore.ProtocolUI
             int index = _states.IndexOf(IsEqual);
             if (index < 0)
             {
-                _states.Add(new State() { Scriptable = state, Layer = -1, Active = isActive });
+                _states.Add(new State() { Scriptable = state, Layer = NotSharedLayer, Active = isActive });
                 return;
             }
             _layer = _states[index].Layer;
-            if(isActive) _states.ForEach(Disable);
+            _states.ForEach(DisableIfNecessary);
             _states[index].Active = isActive;
         }
 
@@ -58,9 +59,9 @@ namespace GameWorkstore.ProtocolUI
             return _states.Any(IsActiveMulty);
         }
 
-        private void Disable(State state)
+        private void DisableIfNecessary(State state)
         {
-            if (state.Layer == _layer) state.Active = false;
+            state.Active &= state.Layer != _layer || state.Layer == NotSharedLayer;
         }
 
         private bool IsEqual(State state)
