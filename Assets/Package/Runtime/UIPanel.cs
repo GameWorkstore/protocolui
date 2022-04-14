@@ -9,6 +9,9 @@ namespace GameWorkstore.ProtocolUI
     {
         public UIStateScriptable[] ActiveStates;
         public Selectable FirstSelected;
+        public bool SetVisibilityOnShow = true;
+        public bool SetVisibilityOnHide = true;
+
 
         private const int FrameUpdate = 10;
         private UIStateService _stateService;
@@ -34,19 +37,56 @@ namespace GameWorkstore.ProtocolUI
         {
             if (_frameCount++ % FrameUpdate > 0) return;
 
-            bool isActive = _stateService.IsActive(ref ActiveStates);
+            bool isVisible = _stateService.IsActive(ref ActiveStates);
 
-            if (gameObject.activeSelf != isActive || !_initialized && isActive)
+            if (gameObject.activeSelf != isVisible || !_initialized && isVisible)
             {
                 _initialized = true;
-                gameObject.SetActive(isActive);
-                if (isActive && FirstSelected != null)
+                if (isVisible)
+                {
+                    OnShow();
+                    if (SetVisibilityOnShow)
+                    {
+                        CompleteShow();
+                    }
+                }
+                else
+                {
+                    if (SetVisibilityOnHide)
+                    {
+                        CompleteHide();
+                    }
+                    OnHide();
+                }
+
+                if (isVisible && FirstSelected != null)
                 {
                     EventSystem.current.SetSelectedGameObject(null);
                     EventSystem.current.SetSelectedGameObject(FirstSelected.gameObject);
                 }
             }
         }
+
+        /// <summary>
+        /// The framework requests to the panel to become visible.
+        /// </summary>
+        public virtual void OnShow() { }
+
+        /// <summary>
+        /// The framework requests to the panel to become invisible.
+        /// </summary>
+        public virtual void OnHide() { }
+
+        protected void CompleteShow()
+        {
+            gameObject.SetActive(true);
+        }
+
+        protected void CompleteHide()
+        {
+            gameObject.SetActive(false);
+        }
+
 
         public void Select(GameObject gameObject)
         {
