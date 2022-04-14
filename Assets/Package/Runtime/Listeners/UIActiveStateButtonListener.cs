@@ -8,7 +8,6 @@ namespace GameWorkstore.ProtocolUI
     {
         public UIStateScriptable State;
         private UIStateService _uistateservice;
-        private int _stateHash;
 
         // Start is called before the first frame update
         private void Awake()

@@ -12,8 +12,7 @@ namespace GameWorkstore.ProtocolUI
         public bool SetVisibilityOnShow = true;
         public bool SetVisibilityOnHide = true;
 
-
-        private const int FrameUpdate = 10;
+        public static int FrameUpdate = 10;
         private UIStateService _stateService;
         private bool _initialized = false;
         private int _frameCount = 0;
