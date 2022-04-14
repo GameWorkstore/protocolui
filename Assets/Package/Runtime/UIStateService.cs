@@ -47,13 +47,13 @@ namespace GameWorkstore.ProtocolUI
             _states[index].Active = isActive;
         }
 
-        public bool IsActive(UIStateScriptable state)
+        public bool IsStateActive(UIStateScriptable state)
         {
             _proc = state.Hash;
             return _states.Any(IsActive);
         }
 
-        public bool IsActive(ref UIStateScriptable[] states)
+        public bool IsAnyStateActive(ref UIStateScriptable[] states)
         {
             _procs = states;
             return _states.Any(IsActiveMulty);

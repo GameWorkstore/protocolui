@@ -37,7 +37,7 @@ namespace GameWorkstore.ProtocolUI
         {
             if (_frameCount++ % FrameUpdate > 0) return;
 
-            bool isVisible = _stateService.IsActive(ref ActiveStates);
+            bool isVisible = _stateService.IsAnyStateActive(ref ActiveStates);
 
             if (gameObject.activeSelf != isVisible || !_initialized && isVisible)
             {
