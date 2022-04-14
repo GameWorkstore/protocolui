@@ -7,7 +7,7 @@ namespace GameWorkstore.ProtocolUI
     {
         private readonly HighSpeedArray<State> _states = new HighSpeedArray<State>(100);
         private int _proc;
-        private int[] _procs;
+        private UIStateScriptable[] _procs;
         private int _layer;
 
         public override void Preprocess()
@@ -18,13 +18,13 @@ namespace GameWorkstore.ProtocolUI
         {
         }
         
-        public void RegisterState(int hash, int layer = -1)
+        public void RegisterState(UIStateScriptable state, int layer = -1)
         {
-            _proc = hash;
+            _proc = state.Hash;
             int index = _states.IndexOf(IsEqual);
             if (index < 0)
             {
-                _states.Add(new State() { Hash = hash, Layer = layer, Active = false });
+                _states.Add(new State() { Scriptable = state, Layer = layer, Active = false });
             }
             else if (layer >= 0)
             {
@@ -32,13 +32,13 @@ namespace GameWorkstore.ProtocolUI
             }
         }
 
-        public void SetState(int hash, bool isActive)
+        public void SetState(UIStateScriptable state, bool isActive)
         {
-            _proc = hash;
+            _proc = state.Hash;
             int index = _states.IndexOf(IsEqual);
             if (index < 0)
             {
-                _states.Add(new State() { Hash = hash, Layer = -1, Active = isActive });
+                _states.Add(new State() { Scriptable = state, Layer = -1, Active = isActive });
                 return;
             }
             _layer = _states[index].Layer;
@@ -46,15 +46,15 @@ namespace GameWorkstore.ProtocolUI
             _states[index].Active = isActive;
         }
 
-        public bool IsActive(int activeStatesHash)
+        public bool IsActive(UIStateScriptable state)
         {
-            _proc = activeStatesHash;
+            _proc = state.Hash;
             return _states.Any(IsActive);
         }
 
-        public bool IsActive(ref int[] activeStatesHashs)
+        public bool IsActive(ref UIStateScriptable[] states)
         {
-            _procs = activeStatesHashs;
+            _procs = states;
             return _states.Any(IsActiveMulty);
         }
 
@@ -65,25 +65,25 @@ namespace GameWorkstore.ProtocolUI
 
         private bool IsEqual(State state)
         {
-            return state.Hash == _proc;
+            return state.Scriptable.Hash == _proc;
         }
 
         private bool IsActive(State state)
         {
-            if (state.Hash == _proc) return state.Active;
+            if (state.Scriptable.Hash == _proc) return state.Active;
             return false;
         }
 
         private bool IsActiveMulty(State state)
         {
-            for(int i = 0; i < _procs.Length; i++) if (state.Hash == _procs[i]) return state.Active;
+            for(int i = 0; i < _procs.Length; i++) if (state.Scriptable.Hash == _procs[i].Hash) return state.Active;
             return false;
         }
     }
 
     public class State
     {
-        public int Hash;
+        public UIStateScriptable Scriptable;
         public bool Active;
         public int Layer;
     }
@@ -91,8 +91,7 @@ namespace GameWorkstore.ProtocolUI
     [Serializable]
     public class StatePreview
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2235:Mark all non-serializable fields", Justification = "Non issue.")]
-        public string State;
+        public UIStateScriptable State;
         public int Layer;
     }
 }

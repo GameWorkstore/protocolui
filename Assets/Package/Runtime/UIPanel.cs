@@ -7,23 +7,20 @@ namespace GameWorkstore.ProtocolUI
 {
     public class UIPanel : MonoBehaviour
     {
-        public string[] ActiveStates;
+        public UIStateScriptable[] ActiveStates;
         public Selectable FirstSelected;
 
         private const int FrameUpdate = 10;
         private UIStateService _stateService;
         private bool _initialized = false;
         private int _frameCount = 0;
-        private int[] _activeStatesHash;
 
         public virtual void Register()
         {
-            _activeStatesHash = new int[ActiveStates.Length];
             _stateService = ServiceProvider.GetService<UIStateService>();
-            for (int i = 0; i < _activeStatesHash.Length; i++)
+            for (int i = 0; i < ActiveStates.Length; i++)
             {
-                _activeStatesHash[i] = Animator.StringToHash(ActiveStates[i]);
-                _stateService.RegisterState(_activeStatesHash[i]);
+                _stateService.RegisterState(ActiveStates[i]);
             }
             ServiceProvider.GetService<EventService>().Update.Register(UpdatePanel);
         }
@@ -37,7 +34,7 @@ namespace GameWorkstore.ProtocolUI
         {
             if (_frameCount++ % FrameUpdate > 0) return;
 
-            bool isActive = _stateService.IsActive(ref _activeStatesHash);
+            bool isActive = _stateService.IsActive(ref ActiveStates);
 
             if (gameObject.activeSelf != isActive || !_initialized && isActive)
             {

@@ -8,8 +8,8 @@ namespace GameWorkstore.ProtocolUI
     public class UICanvas : MonoBehaviour
     {
         public StatePreview[] LayeredStates;
-        public string[] ActiveStates;
-        public string[] EditorActiveStates;
+        public UIStateScriptable[] ActiveStates;
+        public UIStateScriptable[] EditorActiveStates;
         private readonly HighSpeedArray<UIPanel> _panels = new HighSpeedArray<UIPanel>(128);
 
         private void Awake()
@@ -29,20 +29,17 @@ namespace GameWorkstore.ProtocolUI
             var _stateService = ServiceProvider.GetService<UIStateService>();
             for (int i = 0; i < LayeredStates.Length; i++)
             {
-                int hash = Animator.StringToHash(LayeredStates[i].State);
-                _stateService.RegisterState(hash, LayeredStates[i].Layer);
+                _stateService.RegisterState(LayeredStates[i].State, LayeredStates[i].Layer);
             }
 #if UNITY_EDITOR
             for (int i = 0; i < EditorActiveStates.Length; i++)
             {
-                int hash = Animator.StringToHash(EditorActiveStates[i]);
-                _stateService.SetState(hash, true);
+                _stateService.SetState(EditorActiveStates[i], true);
             }
 #else
             for(int i=0;i < ActiveStates.Length; i++)
             {
-                int hash = Animator.StringToHash(ActiveStates[i]);
-                _stateService.SetState(hash, true);
+                _stateService.SetState(ActiveStates[i], true);
             }
 #endif
         }

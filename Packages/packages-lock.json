@@ -1,24 +1,19 @@
 {
   "dependencies": {
-    "com.coffee.upm-git-extension": {
-      "version": "git://github.com/mob-sakai/UpmGitExtension",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "c5bd85b033ee9994cf7b4d711479e2602d42c639"
-    },
     "com.gameworkstore.patterns": {
-      "version": "git://github.com/GameWorkstore/patterns",
+      "version": "https://github.com/GameWorkstore/patterns.git#1.1.7",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "a7fe56feb4ec104636cfa4f874fe896000c73f54"
+      "hash": "97b6122b11e5188d4b6bc0206313f99e9ae9ccc2"
     },
     "com.unity.collab-proxy": {
-      "version": "1.3.9",
+      "version": "1.15.15",
       "depth": 0,
       "source": "registry",
-      "dependencies": {},
+      "dependencies": {
+        "com.unity.services.core": "1.0.1"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {
@@ -38,7 +33,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.7",
+      "version": "2.0.14",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -47,10 +42,19 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
-      "version": "1.2.3",
+      "version": "1.2.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.services.core": {
+      "version": "1.0.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.unitywebrequest": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.sysroot": {
@@ -70,7 +74,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.24",
+      "version": "1.1.31",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -81,7 +85,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.textmeshpro": {
-      "version": "3.0.4",
+      "version": "3.0.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {
