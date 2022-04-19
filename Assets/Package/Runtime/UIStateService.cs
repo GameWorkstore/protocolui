@@ -33,7 +33,7 @@ namespace GameWorkstore.ProtocolUI
             }
         }
 
-        public void SetState(UIStateScriptable state, bool isActive)
+        public void SetState(UIStateScriptable state, bool isActive = true)
         {
             _proc = state.Hash;
             int index = _states.IndexOf(IsEqual);
