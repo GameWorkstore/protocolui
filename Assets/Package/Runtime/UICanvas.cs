@@ -29,7 +29,11 @@ namespace GameWorkstore.ProtocolUI
             var _stateService = ServiceProvider.GetService<UIStateService>();
             for (int i = 0; i < LayeredStates.Length; i++)
             {
-                _stateService.RegisterState(LayeredStates[i].State, LayeredStates[i].Layer);
+                for (var j = 0; j < LayeredStates[i].States.Length; j++)
+                {
+                    var state = LayeredStates[i].States[j];
+                    _stateService.RegisterState(state, LayeredStates[i].Layer);
+                }
             }
 #if UNITY_EDITOR
             for (int i = 0; i < EditorActiveStates.Length; i++)

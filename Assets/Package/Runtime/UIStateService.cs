@@ -92,7 +92,8 @@ namespace GameWorkstore.ProtocolUI
     [Serializable]
     public class StatePreview
     {
-        public UIStateScriptable State;
+        public string InspectorElementName;
         public int Layer;
+        public UIStateScriptable[] States;
     }
 }
