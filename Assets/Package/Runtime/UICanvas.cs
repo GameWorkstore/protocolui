@@ -10,18 +10,32 @@ namespace GameWorkstore.ProtocolUI
         public StatePreview[] LayeredStates;
         public UIStateScriptable[] ActiveStates;
         public UIStateScriptable[] EditorActiveStates;
+        [SerializeField] private bool _areUiPanelsInChildren = false;
         private readonly HighSpeedArray<UIPanel> _panels = new HighSpeedArray<UIPanel>(128);
 
         private void Awake()
         {
-            for(int i = 0; i < SceneManager.sceneCount; i++)
+            if(_areUiPanelsInChildren)
             {
-                foreach (var panels in SceneManager.GetSceneAt(i).GetRootGameObjects().Select(t => t.GetComponentsInChildren<UIPanel>(true)))
+                var UIpanels = GetComponentsInChildren<UIPanel>(true).ToList();
+
+                foreach(var panel in UIpanels)
                 {
-                    foreach(var panel in panels)
+                    _panels.Add(panel);
+                    panel.Register();
+                }
+            }
+            else
+            {
+                for(int i = 0; i < SceneManager.sceneCount; i++)
+                {
+                    foreach (var panels in SceneManager.GetSceneAt(i).GetRootGameObjects().Select(t => t.GetComponentsInChildren<UIPanel>(true)))
                     {
-                        _panels.Add(panel);
-                        panel.Register();
+                        foreach(var panel in panels)
+                        {
+                            _panels.Add(panel);
+                            panel.Register();
+                        }
                     }
                 }
             }
