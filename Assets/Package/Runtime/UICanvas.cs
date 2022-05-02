@@ -10,12 +10,12 @@ namespace GameWorkstore.ProtocolUI
         public StatePreview[] LayeredStates;
         public UIStateScriptable[] ActiveStates;
         public UIStateScriptable[] EditorActiveStates;
-        [SerializeField] private bool _areUiPanelsInChildren = false;
+        [SerializeField] private Transform _uiPanelComponentsParent;
         private readonly HighSpeedArray<UIPanel> _panels = new HighSpeedArray<UIPanel>(128);
 
         private void Awake()
         {
-            if(_areUiPanelsInChildren)
+            if(_uiPanelComponentsParent != null)
             {
                 var UIpanels = GetComponentsInChildren<UIPanel>(true).ToList();
 
@@ -25,7 +25,7 @@ namespace GameWorkstore.ProtocolUI
                     panel.Register();
                 }
             }
-            else
+            else //find all UI Panels on scene
             {
                 for(int i = 0; i < SceneManager.sceneCount; i++)
                 {
