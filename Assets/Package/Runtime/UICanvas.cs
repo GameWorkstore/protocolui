@@ -17,7 +17,7 @@ namespace GameWorkstore.ProtocolUI
         {
             if(_uiPanelComponentsParent != null)
             {
-                var UIpanels = GetComponentsInChildren<UIPanel>(true).ToList();
+                var UIpanels = _uiPanelComponentsParent.GetComponentsInChildren<UIPanel>(true).ToList();
 
                 foreach(var panel in UIpanels)
                 {
