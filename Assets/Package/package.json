@@ -12,6 +12,6 @@
     "url": "https://gameworkstore.com"
   },
   "dependencies": {
-    "com.gameworkstore.patterns": "1.2.0"
+    "com.gameworkstore.patterns": "1.2.1"
   }
 }

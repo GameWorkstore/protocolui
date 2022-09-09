@@ -9,13 +9,14 @@ namespace GameWorkstore.ProtocolUI
     {
         public UIStateScriptable[] ActiveStates;
         public Selectable FirstSelected;
-        public bool SetVisibilityOnShow = true;
-        public bool SetVisibilityOnHide = true;
+        public bool ShowInstantly = true;
+        public bool HideInstantly = true;
 
         public static int FrameUpdate = 10;
         private UIStateService _stateService;
         private bool _initialized = false;
         private int _frameCount = 0;
+        private bool _isShowing = false;
 
         public virtual void Register()
         {
@@ -36,29 +37,44 @@ namespace GameWorkstore.ProtocolUI
         {
             if (_frameCount++ % FrameUpdate > 0) return;
 
-            bool isVisible = _stateService.IsAnyStateActive(ref ActiveStates);
+            bool isPanelActive = _stateService.IsAnyStateActive(ref ActiveStates);
 
-            if (gameObject.activeSelf != isVisible || !_initialized && isVisible)
+            if (gameObject.activeSelf != isPanelActive || !_initialized && isPanelActive)
             {
                 _initialized = true;
-                if (isVisible)
+                if (isPanelActive)
                 {
-                    OnShow();
-                    if (SetVisibilityOnShow)
+                    if (!_isShowing)
                     {
-                        CompleteShow();
+                        _isShowing = true;
+                        
+                        if (ShowInstantly)
+                        {
+                            CompleteShow();
+                        }
+                        else
+                        {
+                            PrepareToShow(); 
+                        }
                     }
                 }
                 else
                 {
-                    if (SetVisibilityOnHide)
+                    if (_isShowing)
                     {
-                        CompleteHide();
+                        _isShowing = false;
+                        if (HideInstantly)
+                        {
+                            CompleteHide();
+                        }
+                        else
+                        {
+                            PrepareToHide();
+                        }
                     }
-                    OnHide();
                 }
 
-                if (isVisible && FirstSelected != null)
+                if (isPanelActive && FirstSelected != null)
                 {
                     EventSystem.current.SetSelectedGameObject(null);
                     EventSystem.current.SetSelectedGameObject(FirstSelected.gameObject);
@@ -69,12 +85,12 @@ namespace GameWorkstore.ProtocolUI
         /// <summary>
         /// The framework requests to the panel to become visible.
         /// </summary>
-        public virtual void OnShow() { }
+        public virtual void PrepareToShow() { }
 
         /// <summary>
         /// The framework requests to the panel to become invisible.
         /// </summary>
-        public virtual void OnHide() { }
+        public virtual void PrepareToHide() { }
 
         protected void CompleteShow()
         {
