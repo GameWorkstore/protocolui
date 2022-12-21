@@ -16,7 +16,7 @@ namespace GameWorkstore.ProtocolUI
         private UIStateService _stateService;
         private bool _initialized = false;
         private int _frameCount = 0;
-        private bool _isShowing = false;
+        private bool _isChangingState = false;
 
         public virtual void Register()
         {
@@ -28,7 +28,7 @@ namespace GameWorkstore.ProtocolUI
             ServiceProvider.GetService<EventService>().Update.Register(UpdatePanel);
         }
 
-        public virtual void Unregister()
+        public void OnDestroy()
         {
             ServiceProvider.GetService<EventService>().Update.Unregister(UpdatePanel);
         }
@@ -39,15 +39,26 @@ namespace GameWorkstore.ProtocolUI
 
             bool isPanelActive = _stateService.IsAnyStateActive(ref ActiveStates);
 
-            if (gameObject.activeSelf != isPanelActive || !_initialized && isPanelActive)
+            if (!_initialized)
             {
+                gameObject.SetActive(isPanelActive);
                 _initialized = true;
+
+                if (isPanelActive && FirstSelected != null)
+                {
+                    EventSystem.current.SetSelectedGameObject(null);
+                    EventSystem.current.SetSelectedGameObject(FirstSelected.gameObject);
+                }
+                return;
+            }
+
+            if (gameObject.activeSelf != isPanelActive)
+            {
                 if (isPanelActive)
                 {
-                    if (!_isShowing)
+                    if (!_isChangingState)
                     {
-                        _isShowing = true;
-                        
+                        _isChangingState = true;
                         if (ShowInstantly)
                         {
                             CompleteShow();
@@ -60,9 +71,9 @@ namespace GameWorkstore.ProtocolUI
                 }
                 else
                 {
-                    if (_isShowing)
+                    if (!_isChangingState)
                     {
-                        _isShowing = false;
+                        _isChangingState = true;
                         if (HideInstantly)
                         {
                             CompleteHide();
@@ -95,11 +106,13 @@ namespace GameWorkstore.ProtocolUI
         protected void CompleteShow()
         {
             gameObject.SetActive(true);
+            _isChangingState = false;
         }
 
         protected void CompleteHide()
         {
             gameObject.SetActive(false);
+            _isChangingState = false;
         }
 
 

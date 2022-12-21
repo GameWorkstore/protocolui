@@ -1,7 +1,8 @@
-﻿using System.Linq;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using GameWorkstore.Patterns;
+using UnityEngine.Serialization;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 namespace GameWorkstore.ProtocolUI
 {
@@ -10,30 +11,30 @@ namespace GameWorkstore.ProtocolUI
         public StatePreview[] LayeredStates;
         public UIStateScriptable[] ActiveStates;
         public UIStateScriptable[] EditorActiveStates;
-        [SerializeField] private Transform _uiPanelComponentsParent;
-        private readonly HighSpeedArray<UIPanel> _panels = new HighSpeedArray<UIPanel>(128);
+        [FormerlySerializedAs("_uiPanelComponentsParent")]
+        public Transform CanvasRoot;
+        public bool DebugEnabled;
 
         private void Awake()
         {
-            if(_uiPanelComponentsParent != null)
+            if(CanvasRoot != null)
             {
-                var UIpanels = _uiPanelComponentsParent.GetComponentsInChildren<UIPanel>(true).ToList();
-
-                foreach(var panel in UIpanels)
+                foreach(var panel in CanvasRoot.GetComponentsInChildren<UIPanel>(true))
                 {
-                    _panels.Add(panel);
+                    if (DebugEnabled) Debug.Log($"Panel {panel.name} registered");
                     panel.Register();
                 }
             }
-            else //find all UI Panels on scene
+            else
             {
-                for(int i = 0; i < SceneManager.sceneCount; i++)
+                //find all UI Panels on scene
+                for (int i = 0; i < SceneManager.sceneCount; i++)
                 {
                     foreach (var panels in SceneManager.GetSceneAt(i).GetRootGameObjects().Select(t => t.GetComponentsInChildren<UIPanel>(true)))
                     {
-                        foreach(var panel in panels)
+                        foreach (var panel in panels)
                         {
-                            _panels.Add(panel);
+                            if (DebugEnabled) Debug.Log($"Panel {panel.name} registered");
                             panel.Register();
                         }
                     }
@@ -60,11 +61,6 @@ namespace GameWorkstore.ProtocolUI
                 _stateService.SetState(ActiveStates[i], true);
             }
 #endif
-        }
-
-        private void OnDestroy()
-        {
-            _panels.ForEach(t => t.Unregister());
         }
     }
 }
