@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.gameworkstore.patterns": {
-      "version": "https://github.com/GameWorkstore/patterns.git#1.3.0",
+      "version": "https://github.com/GameWorkstore/patterns.git#1.3.2",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "d53ae9d89f13f1b82d62b327a9005933b62de5d7"
+      "hash": "00a6149b4849c079a9b88f96fa7205fd322c2e06"
     },
     "com.unity.collab-proxy": {
       "version": "1.17.7",
