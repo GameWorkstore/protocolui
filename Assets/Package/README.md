@@ -7,15 +7,15 @@ Use it your own risk!
 
 At package.json, add these lines of code:
 ```json
-"com.gameworkstore.protocolui": "https://github.com/GameWorkstore/protocolui.git#1.1.4"
-"com.gameworkstore.patterns": "https://github.com/GameWorkstore/patterns.git#1.2.0"
+"com.gameworkstore.protocolui": "https://github.com/GameWorkstore/protocolui.git#1.2.4"
+"com.gameworkstore.patterns": "https://github.com/GameWorkstore/patterns.git#1.3.2"
 ```
 
 And wait for unity to download and compile the package.
 
 you can upgrade your version by including the release version at end of the link:
 ```json
-"com.gameworkstore.protocolui": "https://github.com/GameWorkstore/protocolui.git#1.1.5"
+"com.gameworkstore.protocolui": "https://github.com/GameWorkstore/protocolui.git#1.2.4"
 ```
 
 # Contributions
