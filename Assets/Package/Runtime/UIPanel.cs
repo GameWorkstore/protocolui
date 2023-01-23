@@ -41,6 +41,7 @@ namespace GameWorkstore.ProtocolUI
 
             if (!_initialized)
             {
+                gameObject.SetActive(true);
                 gameObject.SetActive(isPanelActive);
                 _initialized = true;
 

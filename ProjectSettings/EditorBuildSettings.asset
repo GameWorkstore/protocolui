@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/LocalTests/UIPanelsOnSceneLoad/A.unity
+    guid: 7c325ebf9b2339a4f8e5ba4dea9fb46c
+  - enabled: 1
+    path: Assets/LocalTests/UIPanelsOnSceneLoad/B.unity
+    guid: 4c083a4d20c0bb64b863aec87d1bfe0b
   m_configObjects: {}
