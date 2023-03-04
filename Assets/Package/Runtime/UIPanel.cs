@@ -8,6 +8,7 @@ namespace GameWorkstore.ProtocolUI
     public class UIPanel : MonoBehaviour
     {
         public UIStateScriptable[] ActiveStates;
+        public GameObject Root;
         public Selectable FirstSelected;
         public bool ShowInstantly = true;
         public bool HideInstantly = true;
@@ -18,22 +19,16 @@ namespace GameWorkstore.ProtocolUI
         private int _frameCount = 0;
         private bool _isChangingState = false;
 
-        public virtual void Register()
+        public void Awake()
         {
             _stateService = ServiceProvider.GetService<UIStateService>();
             for (int i = 0; i < ActiveStates.Length; i++)
             {
                 _stateService.RegisterState(ActiveStates[i]);
             }
-            ServiceProvider.GetService<EventService>().Update.Register(UpdatePanel);
         }
 
-        public void OnDestroy()
-        {
-            ServiceProvider.GetService<EventService>().Update.Unregister(UpdatePanel);
-        }
-
-        public void UpdatePanel()
+        public void LateUpdate()
         {
             if (_frameCount++ % FrameUpdate > 0) return;
 
@@ -41,8 +36,8 @@ namespace GameWorkstore.ProtocolUI
 
             if (!_initialized)
             {
-                gameObject.SetActive(true);
-                gameObject.SetActive(isPanelActive);
+                Root.SetActive(true);
+                Root.SetActive(isPanelActive);
                 _initialized = true;
 
                 if (isPanelActive && FirstSelected != null)
@@ -53,7 +48,7 @@ namespace GameWorkstore.ProtocolUI
                 return;
             }
 
-            if (gameObject.activeSelf != isPanelActive)
+            if (Root.activeSelf != isPanelActive)
             {
                 if (isPanelActive)
                 {
@@ -106,13 +101,13 @@ namespace GameWorkstore.ProtocolUI
 
         protected void CompleteShow()
         {
-            gameObject.SetActive(true);
+            Root.SetActive(true);
             _isChangingState = false;
         }
 
         protected void CompleteHide()
         {
-            gameObject.SetActive(false);
+            Root.SetActive(false);
             _isChangingState = false;
         }
 

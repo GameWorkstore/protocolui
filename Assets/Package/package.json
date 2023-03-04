@@ -1,6 +1,6 @@
 {
   "name": "com.gameworkstore.protocolui",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "displayName": "GameWorkstore Protocol UI",
   "description": "Protocol UI is a small framework to work with multiple screens on a easy and organized way and manage layered panels on Unity.",
   "unity": "2021.3",
