@@ -36,8 +36,6 @@ namespace GameWorkstore.ProtocolUI
 
             if (!_initialized)
             {
-                Root.SetActive(true);
-                Root.SetActive(isPanelActive);
                 _initialized = true;
 
                 if (isPanelActive && FirstSelected != null)
