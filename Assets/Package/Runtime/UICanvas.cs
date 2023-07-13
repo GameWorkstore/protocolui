@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 using GameWorkstore.Patterns;
-using UnityEngine.Serialization;
-using UnityEngine.SceneManagement;
-using System.Linq;
 
 namespace GameWorkstore.ProtocolUI
 {
     public class UICanvas : MonoBehaviour
     {
-        public StatePreview[] LayeredStates;
-        public UIStateScriptable[] ActiveStates;
-        public UIStateScriptable[] EditorActiveStates;
+        [SerializeField] private StatePreview[] LayeredStates;
+        [SerializeField] private UIStateScriptable[] ActiveStates;
+        [SerializeField] private UIStateScriptable[] EditorActiveStates;
+        [SerializeField] private GameObject[] Panels;
+
+        [SerializeField] private bool OverrideRoot;
+
+        [ConditionalField(nameof(OverrideRoot))]
+        [SerializeField] private Canvas CanvasRoot;
 
         private void Awake()
         {
@@ -34,6 +37,10 @@ namespace GameWorkstore.ProtocolUI
                 _stateService.SetState(ActiveStates[i], true);
             }
 #endif
+            foreach(var ob in Panels)
+            {
+                Instantiate(ob, OverrideRoot? CanvasRoot.transform : transform);
+            }
         }
     }
 }
