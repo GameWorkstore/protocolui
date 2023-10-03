@@ -2,6 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using GameWorkstore.Patterns;
+using System;
 
 namespace GameWorkstore.ProtocolUI
 {
@@ -26,12 +27,19 @@ namespace GameWorkstore.ProtocolUI
             {
                 _stateService.RegisterState(ActiveStates[i]);
             }
+
+            InternalUpdate();
         }
 
         public void LateUpdate()
         {
             if (_frameCount++ % FrameUpdate > 0) return;
 
+            InternalUpdate();
+        }
+
+        private void InternalUpdate()
+        {
             bool isPanelActive = _stateService.IsAnyStateActive(ref ActiveStates);
 
             if (!_initialized)
@@ -59,7 +67,7 @@ namespace GameWorkstore.ProtocolUI
                         }
                         else
                         {
-                            PrepareToShow(); 
+                            PrepareToShow();
                         }
                     }
                 }
